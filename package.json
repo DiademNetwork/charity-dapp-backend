@@ -1,0 +1,31 @@
+{
+  "name": "charity-dapp-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DiademNetwork/charity-dapp-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DiademNetwork/charity-dapp-backend/issues"
+  },
+  "homepage": "https://github.com/DiademNetwork/charity-dapp-backend#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "seneca": "^3.7.0",
+    "seneca-web": "^2.2.1"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-spies": "^1.0.0",
+    "mocha": "^5.2.0",
+    "sinon": "^6.3.4"
+  }
+}
