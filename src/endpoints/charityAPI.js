@@ -1,11 +1,10 @@
-module.exports = function api(options) {
-  this.add('init:api', (args, done) => {
+module.exports = function charityAPI(options) {
+  this.add('init:charityAPI', (args, done) => {
     this.act('role:web', {
       routes: {
-        prefix: '/api/',
+        prefix: '/api',
         pin: 'role:api,path:*',
         map: {
-
         }
       }
     }, done)

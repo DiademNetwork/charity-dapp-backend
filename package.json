@@ -18,9 +18,11 @@
   },
   "homepage": "https://github.com/DiademNetwork/charity-dapp-backend#readme",
   "dependencies": {
+    "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "seneca": "^3.7.0",
-    "seneca-web": "^2.2.1"
+    "seneca-web": "^2.2.1",
+    "seneca-web-adapter-express": "^1.1.2"
   },
   "devDependencies": {
     "chai": "^4.2.0",
