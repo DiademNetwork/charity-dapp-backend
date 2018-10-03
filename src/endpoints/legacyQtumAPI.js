@@ -30,7 +30,7 @@ module.exports = function legacyQtumApi(options) {
   })
 
   this.add('role:legacyQtumApi,path:check', (args, done) => {
-    this.act('role:users,cmd:checkUserName', args.args.body, done)
+    this.act('role:users,cmd:checkUserAccount', args.args.body, done)
   })
 
   this.add('role:legacyQtumApi,path:checkQtumAddress', (args, done) => {
