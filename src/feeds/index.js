@@ -54,8 +54,8 @@ module.exports = function feeds(options) {
 
   this.add('role:feeds,cmd:confirmAchievement', async (args, done) => {
     const {
-      name,   // creator fullname
-      actor,  // creator account
+      name,   // witness fullname
+      actor,  // witness account
       wallet, // creator address
       object, // achievement link
       address // witness address
@@ -172,9 +172,9 @@ module.exports = function feeds(options) {
 
   this.add('role:feeds,cmd:confirmTransaction', async (args, done) => {
     const {
-      actor,  // user account
+      actor,  // witness account
       object, // achievement link
-      name    // user fullname
+      name    // witness fullname
     } = args
 
     const activity = Object.assign({}, {
