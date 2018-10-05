@@ -20,6 +20,7 @@
   "dependencies": {
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
+    "getstream": "^3.21.0",
     "seneca": "^3.7.0",
     "seneca-basic": "^0.6.0",
     "seneca-entity": "^2.3.0",
