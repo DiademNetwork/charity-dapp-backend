@@ -208,6 +208,25 @@ module.exports = function feeds(options) {
     transactionsFeed.addActivity(activity).then(done)
   })
 
+  this.add('role:feeds,cmd:updateTransaction', async (args, done) => {
+    const {
+      actor,  // user account
+      object, // achievement link
+      name    // user fullname
+    } = args
+
+    const activity = Object.assign({}, {
+      name, actor, object
+    }, {
+      foreign_id: `update_${object}`,
+      verb: 'update',
+      target: stubTxId,
+      time: new Date()
+    })
+
+    transactionsFeed.addActivity(activity).then(done)
+  })
+
   this.add('role:feeds,cmd:withdrawTransaction', async (args, done) => {
     const {
       actor,  // user account

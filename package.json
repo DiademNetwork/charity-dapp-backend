@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/DiademNetwork/charity-dapp-backend#readme",
   "dependencies": {
+    "dcorejs": "^5.0.2",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "getstream": "^3.21.0",

@@ -3,34 +3,47 @@ chai.use(require('chai-spies'))
 const expect = chai.expect
 
 const user1 = {
-  userAddress: 'QXgSuvpUyMdaGScAbuLAKr3jNNuqNEM2So',
+  userAddress: 'fb-124566928499419',
   userAccount: '124566928499419',
   userName: 'Crypto Igor',
-  token: ''
+  privateKey: 'privatekey1'
 }
 
 const user2 = {
-  userAddress: 'QY7FFhDmFXHGVVRgsyfcA2GJZo9EEtVhEv',
+  userAddress: 'fb-1133316623498653',
   userAccount: '1133316623498653',
   userName: 'John Doe',
-  token: ''
+  privateKey: 'privatekey2'
 }
+
+const registerAccountSpy = chai.spy.returns(Promise.resolve({}))
+const getAccountByNameSpy = chai.spy.returns(Promise.resolve({ exists: true }))
+const listAccountsSpy = chai.spy.returns(Promise.resolve({}))
+const openConnectionSpy = chai.spy.returns(Promise.resolve({}))
+const dcore = {
+  account: () => ({
+      registerAccount: registerAccountSpy,
+    getAccountByName: getAccountByNameSpy,
+    listAccounts: listAccountsSpy,
+  }),
+  connection: () => ({
+    openConnection: openConnectionSpy
+  })
+}
+const registrarAccountId = '1.2.358'
+const registrarPrivateKey = 'privatekey3'
+const lowerBoundAccounts = '1.2.300'
 
 const init = (done) => {
   return require('seneca')()
     .test(done)
-    .use(require('../src/users'))
-    .use('basic')
-    .use('entity')
+    .use(require('../src/users/decent'), { dcore, registrarAccountId, registrarPrivateKey, lowerBoundAccounts })
     .use(function mockUsers() {
       this.add('init:mockUsers', (args, done) => {
         this.act('role:users,cmd:register', user1, (err, result) => {
-          expect({
-            userAccount: result.userAccount,
-            userAddress: result.userAddress,
-            userName: result.userName,
-            token: result.token
-          }).to.be.deep.equal(user1)
+          expect(err).to.be.equal(null)
+          expect(dcore.account().registerAccount).to.have.been.called.with(user1.userAddress, user1.privateKey, user1.privateKey, user1.privateKey, registrarAccountId, registrarPrivateKey)
+          expect(dcore.connection().openConnection).to.have.been.called()
           done()
         })
       })
@@ -44,16 +57,7 @@ describe('users', () => {
     service.act('role:users,cmd:checkUserAccount', { userAccount: user1.userAccount }, (err, result) => {
       expect(err).to.be.equal(null)
       expect(result).to.be.deep.equal({ exists: true })
-      done()
-    })
-  })
-
-  it('should check non-registered user', (done) => {
-    const service = init(done)
-
-    service.act('role:users,cmd:checkUserAccount', { userAccount: user2.userAccount }, (err, result) => {
-      expect(err).to.be.equal(null)
-      expect(result).to.be.deep.equal({ exists: false })
+      expect(dcore.account().getAccountByName).to.have.been.called.with(user1.userAddress)
       done()
     })
   })
@@ -68,28 +72,12 @@ describe('users', () => {
     })
   })
 
-  it('should check non-existing address', (done) => {
-    const service = init(done)
-
-    service.act('role:users,cmd:checkUserAddress', { userAddress: user2.userAddress }, (err, result) => {
-      expect(err).to.be.equal(null)
-      expect(result).to.be.deep.equal({ exists: false })
-      done()
-    })
-  })
-
   it('should retrieve all users', (done) => {
     const service = init(done)
 
     service.act('role:users,cmd:getUsers', (err, result) => {
       expect(err).to.be.equal(null)
-      expect(result.length).to.be.equal(1)
-      expect({
-        userAccount: result[0].userAccount,
-        userAddress: result[0].userAddress,
-        userName: result[0].userName,
-        token: result[0].token
-      }).to.be.deep.equal(user1)
+      expect(dcore.account().listAccounts).to.have.been.called.with(lowerBoundAccounts, 100)
       done()
     })
   })

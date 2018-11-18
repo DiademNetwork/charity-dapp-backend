@@ -15,7 +15,7 @@ describe('qtum', () => {
 
       service.act('role:qtum,cmd:prepareSupport', (err, result) => {
         expect(err).to.be.equal(null)
-        expect(result).to.be.deep.equal({})
+        expect(result).to.be.deep.equal({ address: 'QetMQCLKHswMsU3NZg9MtWR3R9r9479CAT', encodedData: '68656c6c6f7720776f726c64' })
         done()
       })
     })
@@ -37,7 +37,7 @@ describe('qtum', () => {
 
       service.act('role:qtum,cmd:prepareDeposit', (err, result) => {
         expect(err).to.be.equal(null)
-        expect(result).to.be.deep.equal({})
+        expect(result).to.be.deep.equal({ address: 'QetMQCLKHswMsU3NZg9MtWR3R9r9479CAT', encodedData: '68656c6c6f7720776f726c64' })
         done()
       })
     })
